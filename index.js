@@ -2,11 +2,11 @@
  * Created by danieldihardja on 12.08.19.
  */
 
-import {wavep, wave} from "./wave";
-import {drawer, defaultDrawerCtrl} from "./default-drawer";
+import {wave} from "./wave";
+import {drawer} from "./default-drawer";
 import * as dat from 'dat.gui';
 
-const WIDTH = 900;
+import  {config} from "./config";
 
 const cw = document.getElementById('wave');
 const ca = document.getElementById('artwork');
@@ -18,25 +18,18 @@ const ctxa = ca.getContext('2d');
 let tick = 0;
 
 const initCanvas = () => {
-  cw.width = WIDTH;
-  cw.height = 100;
-  ctxw.translate(0, 50);
+  cw.width = config.waveWidth;
+  cw.height = config.waveHeight;
+  ctxw.translate(0, config.waveHeight/2);
 
-  ca.width = WIDTH;
-  ca.height = 400;
+  ca.width = config.artWidth;
+  ca.height = config.artHeight;
 };
 
 const initGUI = () => {
   const gui = new dat.GUI({name: 'sinus duktus'});
-  const waveFolder = gui.addFolder('Wave');
-  waveFolder.add(wavep, 'f1', .1, 10);
-  waveFolder.add(wavep, 'f2', .1, 10);
-  waveFolder.add(wavep, 'o', 0.1, 1);
-  waveFolder.add(wavep, 'a', 1, 50);
-
-  const ddFolder = gui.addFolder('Default drawer');
-  ddFolder.add(defaultDrawerCtrl, 'fadeInterval', 1, 1000, 1);
-
+  wave.setupGUI(gui);
+  drawer.setupGUI(gui);
 };
 
 const render = () => {
@@ -53,7 +46,7 @@ const init = () => {
   render();
 
   resetBtn.addEventListener('click', () => {
-    ctxa.clearRect(0,0,900,400);
+    ctxa.clearRect(0,0,config.artWidth,config.artHeight);
   })
 };
 

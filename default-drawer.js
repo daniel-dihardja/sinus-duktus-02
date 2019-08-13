@@ -12,6 +12,11 @@ class DefaultDrawer {
     this.t = 0;
   }
 
+  setupGUI(gui) {
+    const ddFolder = gui.addFolder('Default drawer');
+    ddFolder.add(this.ctrl, 'fadeInterval', 1, 1000, 1);
+  }
+
   render(ctx, x, y) {
     x = x % 900;
     ctx.fillRect(x,y + 200,1,1);

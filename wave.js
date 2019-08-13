@@ -1,6 +1,9 @@
 /**
  * Created by danieldihardja on 12.08.19.
  */
+
+import {config} from "./config";
+
 export const wavep = {
   f1: 2.8,
   f2: 1,
@@ -16,9 +19,17 @@ class Wave {
     this.wy = 0;
   }
 
+  setupGUI(gui) {
+    const waveFolder = gui.addFolder('Wave');
+    waveFolder.add(wavep, 'f1', .1, 10);
+    waveFolder.add(wavep, 'f2', .1, 10);
+    waveFolder.add(wavep, 'o', 0.1, 1);
+    waveFolder.add(wavep, 'a', 1, 50);
+  }
+
   render(ctx) {
     ctx.fillStyle = '#000';
-    ctx.fillRect(0, -100, 900, 200);
+    ctx.fillRect(0, -config.waveHeight / 2, config.waveWidth, config.waveHeight);
     ctx.fillStyle = '#0F0';
 
     let _t = 0;
