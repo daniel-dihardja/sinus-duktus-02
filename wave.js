@@ -6,9 +6,9 @@ import {config} from "./config";
 
 export const wavep = {
   f1: 2.8,
-  f2: 1,
+  f2: 0.3,
   a: 50,
-  o: 0.1
+  o: 0.31
 };
 
 class Wave {
@@ -21,8 +21,8 @@ class Wave {
 
   setupGUI(gui) {
     const waveFolder = gui.addFolder('Wave');
-    waveFolder.add(wavep, 'f1', .1, 10);
-    waveFolder.add(wavep, 'f2', .1, 10);
+    waveFolder.add(wavep, 'f1', .1, 1, .1);
+    waveFolder.add(wavep, 'f2', .1, 100, .1);
     waveFolder.add(wavep, 'o', 0.1, 1);
     waveFolder.add(wavep, 'a', 1, 50);
   }

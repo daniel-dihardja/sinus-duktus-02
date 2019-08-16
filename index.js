@@ -2,19 +2,25 @@
  * Created by danieldihardja on 12.08.19.
  */
 
+import  {config} from "./config";
 import {wave} from "./wave";
-import {drawer} from "./default-drawer";
+import  {colorful} from "./colorful";
+
+import {saveImage} from "./save-image";
 import * as dat from 'dat.gui';
 
-import  {config} from "./config";
 
 const cw = document.getElementById('wave');
 const ca = document.getElementById('artwork');
 const resetBtn = document.getElementById('reset');
+const saveBtn = document.getElementById('save');
+const startStop = document.getElementById('startStop');
+
 
 const ctxw = cw.getContext('2d');
 const ctxa = ca.getContext('2d');
 
+let play = true;
 let tick = 0;
 
 const initCanvas = () => {
@@ -22,32 +28,32 @@ const initCanvas = () => {
   cw.height = config.waveHeight;
   ctxw.translate(0, config.waveHeight/2);
 
-  ca.width = config.artWidth;
-  ca.height = config.artHeight;
+  colorful.setCanvas(ca);
+  colorful.reset();
 };
 
 const initGUI = () => {
   const gui = new dat.GUI({name: 'sinus duktus'});
   wave.setupGUI(gui);
-  drawer.setupGUI(gui);
+  colorful.setupGUI(gui);
 };
 
 const render = () => {
   window.requestAnimationFrame(render);
+  if(! play) return;
   wave.render(ctxw);
-  drawer.render(ctxa, wave.wx, wave.wy);
+  colorful.render(ctxa, wave.wx, wave.wy);
   tick ++;
 };
 
 const init = () => {
-  console.log('init');
   initCanvas();
   initGUI();
   render();
 
-  resetBtn.addEventListener('click', () => {
-    ctxa.clearRect(0,0,config.artWidth,config.artHeight);
-  })
+  resetBtn.addEventListener('click', () => colorful.reset());
+  saveBtn.addEventListener('click', () => saveImage(ca));
+  startStop.addEventListener('click', () => play = ! play);
 };
 
 init();
