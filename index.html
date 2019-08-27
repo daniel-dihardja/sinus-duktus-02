@@ -5,17 +5,40 @@
     <title>sinus duktus</title>
     <style>
         body {
-            background-color: #fff;
+            background-color: #000;
+            text-align: center;
         }
         canvas {
             border: 1px solid;
-            display: block;
         }
+        #controlValues {
+            dislay: block;
+            border: 1px solid white;
+            width: 200px;
+            height: 400px;
+            color: #FFF;
+            text-align: left
+        }
+
+        #controlValues .crow {
+            display: flex;
+        }
+
     </style>
 </head>
 <body>
 <canvas id="artwork"></canvas>
 <canvas id="wave"></canvas>
+<div id="controlValues">
+    <div class="crow">
+        <div>d1</div>
+        <div>...</div>
+        <div>0.3</div>
+    </div>
+    <div>d2</div>
+    <div>o</div>
+    <div>a</div>
+</div>
 <button id="reset">reset</button>
 <button id="save">save</button>
 <button id="startStop">start/stop</button>
