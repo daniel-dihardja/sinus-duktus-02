@@ -5,7 +5,6 @@
 import {dot} from "./draw-utils";
 import {config} from "./config";
 
-
 class Colorful {
   constructor() {
 
@@ -14,15 +13,10 @@ class Colorful {
     this._uy = 1;
     this.s = 0;
     this._size = 0;
-    this.canvas;
-    this.ctx;
-  }
-
-  setCanvas(canvas) {
-    this.canvas = canvas;
+    this.canvas = document.getElementById('artwork');
     this.canvas.width = config.artWidth;
     this.canvas.height = config.artHeight;
-    this.ctx = canvas.getContext('2d');
+    this.ctx = this.canvas.getContext('2d');
   }
 
   reset(ctrl) {
@@ -31,20 +25,20 @@ class Colorful {
     this.ctx.strokeStyle = '#000';
   }
 
-  render(ctx, x, y, ctrl) {
-    this._x = x % 900;
-    this._uy = y < 0 ? y * -1 : y;
-    this.s = this._uy / 400;
+  render(ctrl) {
+    this._x = ctrl.x % config.waveWidth;
+    this._uy = ctrl.y < 0 ? ctrl.y * -1 : ctrl.y;
+    this.s = this._uy / config.artHeight;
 
-    ctx.fillStyle = `hsla(${ctrl.ch}, ${ctrl.cs}%, ${ctrl.cl}%, 1)`;
+    this.ctx.fillStyle = `hsla(${ctrl.ch}, ${ctrl.cs}%, ${ctrl.cl}%, 1)`;
 
     this._size = ctrl.s - this.s * ctrl.sd;
     if(this._size < 0) this._size *= -1;
-    dot(ctx, this._x * 2, y * 4 + 200, this._size);
+    dot(this.ctx, this._x * 2, ctrl.y * 4 + config.artHeight / 2, this._size);
 
-    if (this.t % ctrl.fadeInterval === 0) {
-      ctx.fillStyle = 'rgba(255, 255, 255, .1)';
-      ctx.fillRect(0,0, config.artWidth, config.artHeight);
+    if (Math.round(ctrl.x * 2) % ctrl.fi === 0) {
+      this.ctx.fillStyle = 'rgba(255, 255, 255, .2)';
+      this.ctx.fillRect(0,0, config.artWidth, config.artHeight);
     }
 
     this.t ++;

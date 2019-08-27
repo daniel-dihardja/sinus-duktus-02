@@ -9,12 +9,19 @@ class Wave {
     this.t = 0;
     this.wx = 0;
     this.wy = 0;
+
+    this.canvas = document.getElementById('wave');
+    this.canvas.width = config.waveWidth;
+    this.canvas.height = config.waveHeight;
+
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.translate(0, config.waveHeight/2);
   }
 
-  render(ctx, ctrl) {
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, -config.waveHeight / 2, config.waveWidth, config.waveHeight);
-    ctx.fillStyle = '#0F0';
+  render(ctrl) {
+    this.ctx.fillStyle = '#000';
+    this.ctx.fillRect(0, -config.waveHeight / 2, config.waveWidth, config.waveHeight);
+    this.ctx.fillStyle = '#0F0';
 
     let _t = 0;
     let _y = 0;
@@ -32,7 +39,7 @@ class Wave {
       _s1 = Math.sin((_t + this.t) / ctrl.d1);
       _s2 = Math.sin((_t + this.t) / ctrl.d2);
       _y = _s1 * _s2 * ctrl.a;
-      ctx.fillRect(_t, _y, 2, 2);
+      this.ctx.fillRect(_t, _y, 2, 2);
       _t ++;
     }
     this.t += ctrl.o;
