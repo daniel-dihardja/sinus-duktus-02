@@ -1,35 +1,39 @@
 /**
  * Created by danieldihardja on 18.08.19.
  */
-class Controller {
+export class Controller {
   constructor() {
-    this.c1 = 1;
-    this.c2 = 1;
-    this.c3 = 1;
-    this.c4 = 1;
-    this.c5 = 1;
-    this.c6 = 1;
-    this.c7 = 1;
-    this.c8 = 1;
-
+    this.map = {};
     this.initMIDI();
-    this.available = false;
+    this.onmidimessage;
   }
 
   initMIDI() {
     navigator.requestMIDIAccess()
     .then(e => {
       for (let i of e.inputs.values()) {
-        i.onmidimessage = (msg) => {
-          this.mapControllValues(msg.data);
+        i.onmidimessage = msg => {
+          switch(msg.data[0]) {
+            case 184: this.handleMIDIControl(msg.data); break;
+          }
+          if (this.onmidimessage) this.onmidimessage.apply(msg.data);
         }
       }
     }, err => {
       console.log(err);
-      this.available = false;
     });
   }
 
+  mapControl(ctrlNum, dict, key, min, max) {
+    this.map[ctrlNum] = {dict, key, min, max}
+  }
+
+  handleMIDIControl(data) {
+    const c = this.map[data[1]];
+    c.dict[c.key] = (data[2] / 127) * c.max;
+  }
+
+  /*
   mapControllValues(data) {
     if(data[0] !== 184) return;
     switch(data[1]) {
@@ -45,6 +49,5 @@ class Controller {
     }
     console.log(data);
   }
+  */
 }
-
-export const controller = new Controller();

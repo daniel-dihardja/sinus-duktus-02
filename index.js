@@ -3,8 +3,9 @@
  */
 
 import  {config} from "./config";
-import {wave} from "./wave";
-import  {colorful} from "./colorful";
+import {Wave} from "./wave";
+import  {Colorful} from "./colorful";
+
 import {controller} from "./controller";
 import {ctrlPanel} from "./ctrl-values-panel";
 
@@ -12,6 +13,9 @@ import {saveImage} from "./save-image";
 import * as dat from 'dat.gui';
 
 import  {ctrlValues} from "./control-values";
+
+const wave = new Wave();
+const colorful = new Colorful();
 
 const resetBtn = document.getElementById('reset');
 const saveBtn = document.getElementById('save');
@@ -24,7 +28,7 @@ const initGUI = () => {
   const gui = new dat.GUI({name: 'sinus duktus'});
   const sd = gui.addFolder('sinus duktus');
   sd.add(ctrlValues, 'd1', .1, 1, .1);
-  sd.add(ctrlValues, 'd2', .1, 100, .1);
+  sd.add(ctrlValues, 'd2', .1, 1, .1);
   sd.add(ctrlValues, 'o', 0.1, 1);
   sd.add(ctrlValues, 'a', 1, 50);
 
@@ -33,6 +37,13 @@ const initGUI = () => {
   sd.add(ctrlValues, 'sd', 1, 50, .1);
   sd.add(ctrlValues, 'ch', 0, 255, 1);
   sd.add(ctrlValues, 'cl', 50, 100, 1);
+};
+
+const initMIDI = () => {
+  controller.mapControl(3, ctrlValues, 'd1', .1, 1);
+  controller.mapControl(65, ctrlValues, 'd2', .1, 100);
+  controller.mapControl(64, ctrlValues, 'o', .1, 1);
+  controller.mapControl(76, ctrlValues, 'a', 1, 50);
 };
 
 const render = () => {

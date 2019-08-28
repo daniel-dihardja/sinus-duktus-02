@@ -4,7 +4,7 @@
 
 import {config} from "./config";
 
-class Wave {
+export class Wave {
   constructor() {
     this.t = 0;
     this.wx = 0;
@@ -46,4 +46,3 @@ class Wave {
   }
 }
 
-export const wave = new Wave();

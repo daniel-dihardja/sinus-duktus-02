@@ -5,7 +5,7 @@
 import {dot} from "./draw-utils";
 import {config} from "./config";
 
-class Colorful {
+export class Colorful {
   constructor() {
 
     this.t = 0;
@@ -44,5 +44,3 @@ class Colorful {
     this.t ++;
   }
 }
-
-export const colorful = new Colorful();
