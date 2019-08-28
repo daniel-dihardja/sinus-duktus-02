@@ -18,10 +18,16 @@ export class Wave {
     this.ctx.translate(0, config.waveHeight/2);
   }
 
+  reset() {
+    this.t = 0;
+    this.wx = 0;
+    this.wy = 0;
+  }
+
   render(ctrl) {
-    this.ctx.fillStyle = '#000';
+    this.ctx.fillStyle = '#0099cc';
     this.ctx.fillRect(0, -config.waveHeight / 2, config.waveWidth, config.waveHeight);
-    this.ctx.fillStyle = '#0F0';
+    this.ctx.fillStyle = '#fff';
 
     let _t = 0;
     let _y = 0;
@@ -39,7 +45,7 @@ export class Wave {
       _s1 = Math.sin((_t + this.t) / ctrl.d1);
       _s2 = Math.sin((_t + this.t) / ctrl.d2);
       _y = _s1 * _s2 * ctrl.a;
-      this.ctx.fillRect(_t, _y, 2, 2);
+      this.ctx.fillRect(_t, _y, 4, 4);
       _t ++;
     }
     this.t += ctrl.o;

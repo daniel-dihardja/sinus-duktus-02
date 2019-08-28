@@ -23,6 +23,7 @@ export class Colorful {
     this.ctx.fillStyle = ctrl.bg;
     this.ctx.fillRect(0,0,config.artWidth, config.artHeight);
     this.ctx.strokeStyle = '#000';
+    this.t = 0;
   }
 
   render(ctrl) {
@@ -37,7 +38,7 @@ export class Colorful {
     dot(this.ctx, this._x * 2, ctrl.y * 4 + config.artHeight / 2, this._size);
 
     if (Math.round(ctrl.x * 2) % ctrl.fi === 0) {
-      this.ctx.fillStyle = 'rgba(255, 255, 255, .2)';
+      this.ctx.fillStyle = 'rgba(255, 255, 255, .1)';
       this.ctx.fillRect(0,0, config.artWidth, config.artHeight);
     }
 
