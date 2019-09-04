@@ -2,9 +2,11 @@
  * Created by danieldihardja on 27.08.19.
  */
 class CtrlValuesPanel {
+
   constructor() {
     this.con = document.getElementById('ctrlValues');
   }
+
   render(ctrl) {
     let r = this.renderRow('d1', ctrl.d1, 1);
     r += this.renderRow('d2', ctrl.d2, 100);
@@ -17,7 +19,6 @@ class CtrlValuesPanel {
 
     this.con.innerHTML = r;
   }
-
 
   renderRow(name, val, max) {
     const p = Math.round((val/max) * 100);

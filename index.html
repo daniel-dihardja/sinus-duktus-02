@@ -5,19 +5,20 @@
     <title>sinus duktus</title>
     <style>
         body {
-            background-color: #fff;
+            background-color: #DDD;
             text-align: center;
+            padding-top: 100px;
+            font-family: Arial;
+
         }
         canvas {
-            border: 1px solid;
+            /*border: 1px solid;*/
         }
         #ctrlValues {
             dislay: block;
-            border: 1px solid;
-            width: 300px;
-            height: 400px;
-            color: #000;
-            text-align: left
+            color: #555;
+            text-align: left;
+            padding-left: 100px;
         }
 
         #controlValues .crow {
@@ -27,11 +28,11 @@
         .slider {
             -webkit-appearance: none;  /* Override default CSS styles */
             appearance: none;
-            //width: 100%; /* Full-width */
+            /*width: 100%;*/ /* Full-width */
             height: 25px; /* Specified height */
-            background: #d3d3d3; /* Grey background */
+            background: #fff; /* Grey background */
             outline: none; /* Remove outline */
-            opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+            /*opacity: 0.7;*/ /* Set transparency (for mouse-over effects on hover) */
             -webkit-transition: .2s; /* 0.2 seconds transition on hover */
             transition: opacity .2s;
         }
@@ -47,7 +48,7 @@
             appearance: none;
             width: 25px; /* Set a specific slider handle width */
             height: 25px; /* Slider handle height */
-            background: #000; /* Green background */
+            background: #555; /* Green background */
             cursor: pointer; /* Cursor on hover */
         }
 
@@ -68,6 +69,7 @@
 <div id="ctrlValues"></div>
 <button id="reset">reset</button>
 <button id="save">save</button>
+<button id="saveParams">save params</button>
 <button id="startStop">start/stop</button>
 <script src="bundle.js"></script>
 </body>

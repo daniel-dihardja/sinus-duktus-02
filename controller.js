@@ -33,6 +33,7 @@ export class Controller {
 
   handleMIDIControl(data) {
     const c = this.map[data[1]];
-    c.dict[c.key] = (data[2] / 127) * c.max;
+    if(! c) return;
+    c.dict[c.key] = (data[2] / 127) * c.max + c.min;
   }
 }

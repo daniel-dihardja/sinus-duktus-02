@@ -25,9 +25,9 @@ export class Wave {
   }
 
   render(ctrl) {
-    this.ctx.fillStyle = '#0099cc';
+    this.ctx.fillStyle = '#333';
     this.ctx.fillRect(0, -config.waveHeight / 2, config.waveWidth, config.waveHeight);
-    this.ctx.fillStyle = '#fff';
+    this.ctx.fillStyle = '#ddd';
 
     let _t = 0;
     let _y = 0;

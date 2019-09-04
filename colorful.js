@@ -37,6 +37,10 @@ export class Colorful {
     if(this._size < 0) this._size *= -1;
     dot(this.ctx, this._x * 2, ctrl.y * 4 + config.artHeight / 2, this._size);
 
+    ctrl.clx =  this._x * 2;
+    ctrl.cly = ctrl.y * 4 + config.artHeight / 2;
+    ctrl.cls = this._size;
+
     if (Math.round(ctrl.x * 2) % ctrl.fi === 0) {
       this.ctx.fillStyle = 'rgba(255, 255, 255, .1)';
       this.ctx.fillRect(0,0, config.artWidth, config.artHeight);

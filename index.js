@@ -23,6 +23,7 @@ const rec = new Recorder();
 const resetBtn = document.getElementById('reset');
 const saveBtn = document.getElementById('save');
 const startStop = document.getElementById('startStop');
+const saveParams = document.getElementById('saveParams');
 
 let play = true;
 let tick = 0;
@@ -50,12 +51,14 @@ const initMIDI = () => {
 
   controller.mapControl(84, ctrlValues, 's', 1, 10);
   controller.mapControl(85, ctrlValues, 'sd', 1, 50);
-  controller.mapControl(73, ctrlValues, 'cl', 50, 100);
-  controller.mapControl(75, ctrlValues, 'ch', 0, 255);
+  controller.mapControl(75, ctrlValues, 'cl', 50, 100);
+  controller.mapControl(73, ctrlValues, 'ch', 0, 255);
 
   controller.onmidimessage = data => {
     switch(data[0]) {
       case 176: handlePlayer(data); break;
+      case 152: midiButtonHandler(data); break;
+      case 184: presetButtonHandler(data); break;
     }
     ctrlPanel.render(ctrlValues);
   }
@@ -68,6 +71,21 @@ const handlePlayer = (data) => {
   }
 };
 
+const midiButtonHandler = (data) => {
+  console.log(data);
+  switch(data[1]) {
+    case 51: saveImage(colorful.canvas); break;
+    case 43: reset(); break;
+  }
+};
+
+const presetButtonHandler = (data) => {
+  switch(data[1]) {
+    case 20: rec.record(ctrlValues); break;
+  }
+  console.log(rec.records);
+};
+
 const render = () => {
   window.requestAnimationFrame(render);
   if(! play) return;
@@ -77,25 +95,29 @@ const render = () => {
 
   wave.render(ctrlValues);
   colorful.render(ctrlValues);
-  rec.record(ctrlValues);
 
   tick ++;
 };
 
+const reset = () => {
+  colorful.reset(ctrlValues);
+  wave.reset();
+  console.log(rec.records);
+  rec.reset();
+};
+
 const init = () => {
   colorful.reset(ctrlValues);
-  initGUI();
+  //initGUI();
   initMIDI();
   render();
 
-  resetBtn.addEventListener('click', () => {
-    colorful.reset(ctrlValues);
-    wave.reset();
-    console.log(rec.records);
-    rec.reset();
-  });
+  resetBtn.addEventListener('click', () => reset());
   saveBtn.addEventListener('click', () => saveImage(colorful.canvas));
   startStop.addEventListener('click', () => play = ! play);
+  saveParams.addEventListener('click', () => {
+    localStorage.setItem('')
+  })
 };
 
 init();
