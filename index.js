@@ -14,6 +14,8 @@ import {saveImage} from "./save-image";
 import * as dat from 'dat.gui';
 
 import  {ctrlValues} from "./control-values";
+import {preset} from "./preset";
+
 
 const wave = new Wave();
 const colorful = new Colorful();
@@ -41,6 +43,19 @@ const initGUI = () => {
   sd.add(ctrlValues, 'sd', 1, 50, .1);
   sd.add(ctrlValues, 'ch', 0, 255, 1);
   sd.add(ctrlValues, 'cl', 50, 100, 1);
+};
+
+const initKeys = () => {
+  window.addEventListener('keydown', e => {
+    switch(e.key) {
+      case '1': preset(1, ctrlValues); break;
+      case '2': preset(2, ctrlValues); break;
+      case '3': preset(3, ctrlValues); break;
+      case '4': preset(4, ctrlValues); break;
+      case '5': preset(5, ctrlValues); break;
+      case '0': console.log(ctrlValues); break
+    }
+  });
 };
 
 const initMIDI = () => {
@@ -72,7 +87,6 @@ const handlePlayer = (data) => {
 };
 
 const midiButtonHandler = (data) => {
-  console.log(data);
   switch(data[1]) {
     case 51: saveImage(colorful.canvas); break;
     case 43: reset(); break;
@@ -108,7 +122,8 @@ const reset = () => {
 
 const init = () => {
   colorful.reset(ctrlValues);
-  //initGUI();
+  initGUI();
+  initKeys();
   initMIDI();
   render();
 
