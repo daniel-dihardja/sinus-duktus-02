@@ -15,7 +15,7 @@ export class Controller {
     .then(e => {
       for (let i of e.inputs.values()) {
         i.onmidimessage = msg => {
-          console.log(msg.data);
+          // console.log(msg.data);
           switch(msg.data[0]) {
             case 184: this.handleMIDIControl(msg.data); break;
           }

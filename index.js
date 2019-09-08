@@ -16,7 +16,6 @@ import * as dat from 'dat.gui';
 import  {ctrlValues} from "./control-values";
 import {preset} from "./preset";
 
-
 const wave = new Wave();
 const colorful = new Colorful();
 const controller = new Controller();
@@ -53,6 +52,9 @@ const initKeys = () => {
       case '3': preset(3, ctrlValues); break;
       case '4': preset(4, ctrlValues); break;
       case '5': preset(5, ctrlValues); break;
+      case '6': preset(6, ctrlValues); break;
+      case '7': preset(7, ctrlValues); break;
+      case '8': preset(8, ctrlValues); break;
       case '0': console.log(ctrlValues); break
     }
   });
@@ -66,14 +68,14 @@ const initMIDI = () => {
 
   controller.mapControl(84, ctrlValues, 's', 1, 10);
   controller.mapControl(85, ctrlValues, 'sd', 1, 50);
-  controller.mapControl(75, ctrlValues, 'cl', 50, 100);
+  controller.mapControl(75, ctrlValues, 'cl', 0, 100);
   controller.mapControl(73, ctrlValues, 'ch', 0, 255);
 
   controller.onmidimessage = data => {
     switch(data[0]) {
       case 176: handlePlayer(data); break;
-      case 152: midiButtonHandler(data); break;
-      case 184: presetButtonHandler(data); break;
+      case 152: handleButtons(data); break;
+      case 184: handlePresets(data); break;
     }
     ctrlPanel.render(ctrlValues);
   }
@@ -86,18 +88,24 @@ const handlePlayer = (data) => {
   }
 };
 
-const midiButtonHandler = (data) => {
+const handleButtons = (data) => {
   switch(data[1]) {
     case 51: saveImage(colorful.canvas); break;
     case 43: reset(); break;
   }
 };
 
-const presetButtonHandler = (data) => {
+const handlePresets = (data) => {
   switch(data[1]) {
-    case 20: rec.record(ctrlValues); break;
+    case 20: preset(1, ctrlValues); break;
+    case 21: preset(2, ctrlValues); break;
+    case 22: preset(3, ctrlValues); break;
+    case 23: preset(4, ctrlValues); break;
+    case 24: preset(5, ctrlValues); break;
+    case 25: preset(6, ctrlValues); break;
+    case 26: preset(7, ctrlValues); break;
+    case 27: preset(8, ctrlValues); break;
   }
-  console.log(rec.records);
 };
 
 const render = () => {
@@ -122,17 +130,19 @@ const reset = () => {
 
 const init = () => {
   colorful.reset(ctrlValues);
-  initGUI();
+  //initGUI();
   initKeys();
   initMIDI();
   render();
 
+  /*
   resetBtn.addEventListener('click', () => reset());
   saveBtn.addEventListener('click', () => saveImage(colorful.canvas));
   startStop.addEventListener('click', () => play = ! play);
   saveParams.addEventListener('click', () => {
     localStorage.setItem('')
   })
+  */
 };
 
 init();

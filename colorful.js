@@ -6,8 +6,8 @@ import {dot} from "./draw-utils";
 import {config} from "./config";
 
 export class Colorful {
-  constructor() {
 
+  constructor() {
     this.t = 0;
     this._x;
     this._uy = 1;
